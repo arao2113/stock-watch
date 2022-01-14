@@ -29,11 +29,9 @@ body {
 }
 
 .header {
-  padding: 10px;
   display: grid;
+  padding: 10px;
   background-color: #1dad9b;
-  grid-template-columns: 7fr 3fr;
-  grid-gap: 20px;
   text-align: center;
 }
 
@@ -42,21 +40,25 @@ body {
   justify-self: center;
   border: 0.25rem solid #346357;
   border-radius: 15px;
+  display: inline;
 }
 
 .ticker-input {
   height: 30px;
+  font-weight: bolder;
+  font-size: 16px;
 }
 
 .add {
-  height: 30px;
+  height: 32px;
   width: 80px;
+  font-weight: bolder;
 }
 
 .main-table {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  font-size: 12px;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  font-size: 16px;
   font-weight: bolder;
   text-align: left;
   padding: 5px;
@@ -66,11 +68,27 @@ body {
 
 .table-data {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
   font-size: 12px;
   font-weight: bolder;
   text-align: left;
   padding: 5px;
   width: 100%;
   text-align: center;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin: 1px 1px;
+}
+
+tr:nth-child(even) {
+  background-color: #fcffc1;
+}
+
+.delete {
+  background-color: transparent;
+  border: transparent;
+}
+
+.delete:hover {
+  cursor: pointer;
 }

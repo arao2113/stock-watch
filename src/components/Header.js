@@ -1,51 +1,59 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import Stock from './Stock';
 
+
 const Header = () => {
 
+    const dataFromLocalStorage = JSON.parse(localStorage.getItem('my-stocks')  || "[]")
+
     const [ticker, setTicker] = useState('');
-    const [stocks, setStocks] = useState({});
+    const [stocks, setStocks] = useState(dataFromLocalStorage);
+
+    
 
     const url = `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=${process.env.REACT_APP_API_KEY}`;
 
     // AJAX call for individual stock
-    const getData = () => {
+    const getData = (e) => {
+        e.preventDefault();
         axios.get(url)
         .then((response) => {
-            console.log(response);
-            setStocks(response.data)
-            console.log(response.data);
+            setStocks([...stocks, response.data]);
+            setTicker('');
         })
         .catch((error) => {
             console.log(error);
         },);
     }
 
-    // Handles input when users hit enter
-    const handleKeypress = (e) => {
-        if(e.keyCode === 13) {
-            getData();
-        }
-    }
+    useEffect(() => {
+        localStorage.setItem('my-stocks', JSON.stringify(stocks))
+    }, [stocks])
 
+    // Remove an item
+    const removeItem = (volume) => {
+        const newStocks = stocks.filter(stock => stock.volume !== volume);
+        setStocks(newStocks);
+    }
 
     return (
         <div className='header'>
-                <h1 id='brand'>Stock Watch: {ticker}</h1>
+            <h1 id='brand'>Stock Watch: {ticker}</h1>
                 <div className='input-flow'>
-                    <input 
-                    value={ticker}
-                    onChange={(e) => setTicker(e.target.value)}
-                    onKeyDown={handleKeypress}
-                    className='ticker-input' 
-                    type='text' 
-                    placeholder='Ticker Symbol' 
-                    maxLength='5' minLength='1'/>
-                    <button 
-                    className='add' 
-                    onClick={getData}
-                    type='submit'>Add</button>
+                    <form onSubmit={getData}>
+                        <input 
+                            value={ticker}
+                            onChange={(e) => setTicker(e.target.value)}
+                            className='ticker-input' 
+                            type='text' 
+                            placeholder='Ticker Symbol' 
+                            maxLength='5' minLength='1'/>
+                            <button 
+                            className='add'
+                            disabled={!ticker}
+                            type='submit'>Add ✅</button>
+                    </form>
                 </div>
                 <table >
                     <thead>
@@ -61,7 +69,13 @@ const Header = () => {
                             <th></th>
                         </tr>
                     </thead>
-                        <Stock {...stocks} />
+                        <tbody>
+                            {stocks.map((stock) => {
+                                return (
+                                    <Stock {...stock} key={stock.volume} removeItem={removeItem}/>
+                                )
+                            })}
+                        </tbody>
                 </table>
         </div>
     )
