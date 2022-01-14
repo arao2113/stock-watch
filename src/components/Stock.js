@@ -1,22 +1,19 @@
-const Stock = (props) => {
-
+const Stock = (stocks) => {
+    
     return (
-        <table>
-            
-                <tr className="table-data">
-                <td>{props.latestTime}</td>
-                <td>{props.symbol}</td>
-                <td>{props.companyName}</td>
-                <td>{props.iexOpen}</td>
-                <td>{props.iexClose}</td>
-                <td>{props.change}</td>
-                <td>{props.week52High}</td>
-                <td>{props.week52Low}</td>
-                <td></td>
-                </tr>
-        
-            
-        </table>
+        <tr className="table-data">
+            <td>{stocks.latestTime}</td>
+            <td>{stocks.symbol}</td>
+            <td>{stocks.companyName}</td>
+            <td>{stocks.iexOpen}</td>
+            <td>{stocks.iexClose}</td>
+            <td>{stocks.change}</td>
+            <td>{stocks.week52High}</td>
+            <td>{stocks.week52Low}</td>
+            <td>
+                <button className="delete" onClick={() => stocks.removeItem(stocks.volume)}>❌</button>
+            </td>
+        </tr>
     )
 }
 
