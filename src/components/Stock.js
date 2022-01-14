@@ -11,7 +11,7 @@ const Stock = (stocks) => {
             <td>{stocks.week52High}</td>
             <td>{stocks.week52Low}</td>
             <td>
-                <button className="delete" onClick={() => stocks.removeItem(stocks.volume)}>❌</button>
+                <button className="delete" onClick={() => stocks.removeItem(stocks.peRatio)}>❌</button>
             </td>
         </tr>
     )
