@@ -10,9 +10,9 @@ const Header = () => {
     const [ticker, setTicker] = useState('');
     const [stocks, setStocks] = useState(dataFromLocalStorage);
 
-    
 
     const url = `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=${process.env.REACT_APP_API_KEY}`;
+    
 
     // AJAX call for individual stock
     const getData = (e) => {
@@ -27,13 +27,14 @@ const Header = () => {
         },);
     }
 
+    // Set stock rows in local storage
     useEffect(() => {
         localStorage.setItem('my-stocks', JSON.stringify(stocks))
     }, [stocks])
 
     // Remove an item
-    const removeItem = (volume) => {
-        const newStocks = stocks.filter(stock => stock.volume !== volume);
+    const removeItem = (peRatio) => {
+        const newStocks = stocks.filter(stock => stock.peRatio !== peRatio);
         setStocks(newStocks);
     }
 
@@ -72,7 +73,7 @@ const Header = () => {
                         <tbody>
                             {stocks.map((stock) => {
                                 return (
-                                    <Stock {...stock} key={stock.volume} removeItem={removeItem}/>
+                                    <Stock {...stock} key={stock.peRatio} removeItem={removeItem}/>
                                 )
                             })}
                         </tbody>
